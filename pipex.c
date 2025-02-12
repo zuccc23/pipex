@@ -6,7 +6,7 @@
 /*   By: dahmane <dahmane@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 00:54:28 by dahmane           #+#    #+#             */
-/*   Updated: 2025/02/11 18:07:51 by dahmane          ###   ########.fr       */
+/*   Updated: 2025/02/12 13:08:39 by dahmane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,27 +15,63 @@
 int main (int argc, char **argv)
 {
     int id = 0;
+    int id2 = 0;
     int fd[2];
-    int nb = 22;
-    int nb2;
+    char    buffer[100];
+    int     fd2[2];
     
-    // fd[0] = open(argv[1], O_RDONLY);
-    // fd[1] = open(argv[2], O_RDONLY);
     pipe(fd);
+    pipe(fd2);
     id = fork();
     if (id == 0)
     {
+        int nb = 5;
         close(fd[0]);
         write(fd[1], &nb, sizeof(int));
         close(fd[1]);
+
+        close(fd2[1]);
+        read(fd2[0], &nb, sizeof(int));
+        close(fd2[0]);
+        printf("%d\n", nb);
     }
     if (id != 0)
     {
+        int nb2;
         close(fd[1]);
         read(fd[0], &nb2, sizeof(int));
-        printf("%d\n", nb2);
         close(fd[0]);
+        // printf("%d\n", nb2);
+        nb2 *= 2;
+
+        close(fd2[0]);
+        write(fd2[1], &nb2, sizeof(int));
+        close(fd2[1]);
     }
     
-    
+    // id = fork();
+    // id2 = fork();
+    // if (id == 0)
+    // {
+    //     if (id2 == 0)
+    //     {
+    //         printf("child2\n");
+    //     }
+    //     else
+    //     {
+    //         // wait(NULL);
+    //         printf("parent\n");
+    //     }
+    // }
+    // else 
+    // {
+    //     if (id2 == 0)
+    //     {
+    //         printf("child1\n");
+    //     }
+    //     else
+    //     {
+    //         printf("main\n");
+    //     }
+    // }
 }
