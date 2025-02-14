@@ -6,7 +6,7 @@
 /*   By: dahmane <dahmane@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 14:10:53 by dahmane           #+#    #+#             */
-/*   Updated: 2025/02/13 18:08:44 by dahmane          ###   ########.fr       */
+/*   Updated: 2025/02/14 14:19:24 by dahmane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,3 +39,18 @@ char	*ft_strjoin(char *s1, char *s2)
 	s3[i] = '\0';
 	return (s3);
 }
+
+void    free_strs(char **strs)
+{
+    int i;
+
+    i = 0;
+    while (strs[i])
+    {
+        free(strs[i]);
+        i++;
+        // ft_printf("test\n");
+    }
+    free(strs);
+}
+
