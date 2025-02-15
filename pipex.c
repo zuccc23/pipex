@@ -6,7 +6,7 @@
 /*   By: dahmane <dahmane@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 00:54:28 by dahmane           #+#    #+#             */
-/*   Updated: 2025/02/15 16:16:59 by dahmane          ###   ########.fr       */
+/*   Updated: 2025/02/15 17:14:02 by dahmane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ int main (int argc, char **argv, char **env)
 {
 	int     id = 0;
 	int     id2 = 0;
+	int		pid[2];
 	int     fd[2];
 	int     fd2[2];
 	t_pipeto   *pipeto;
@@ -47,15 +48,21 @@ int main (int argc, char **argv, char **env)
 	// ft_printf("%s\n", pipeto->ok_path);
 	// free_all(pipeto);
 
-	// USE EXECVE //////////////////////////////////////////////////////////////
+	// FORK //////////////////////////////////////////////////////////////
+
+	pid[0] = fork();
+	if (pid[0] != 0)
+		pid[1] = fork();
+	ft_printf("test\n");
+	// FIRST CHILD? //////////////////////////////////////////////////////////////
 	
-	id = open(pipeto->infile, O_RDONLY);
-	if (id == -1)
-		return (return_error(pipeto, id));
-	// id2 = open(pipeto->outfile, O_WRONLY);
-	dup2(id, STDIN_FILENO);
-	// dup2(id2, STDOUT_FILENO);
-	execve(pipeto->ok_path, pipeto->commands_in, env);
+	// id = open(pipeto->infile, O_RDONLY);
+	// if (id == -1)
+	// 	return (return_error(pipeto, id));
+	// // id2 = open(pipeto->outfile, O_WRONLY);
+	// dup2(id, STDIN_FILENO);
+	// // dup2(id2, STDOUT_FILENO);
+	// execve(pipeto->ok_path, pipeto->commands_in, env);
 
 	// DOUBLE PIPE ////////////////////////////////////////////////////////////
 	
