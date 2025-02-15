@@ -6,7 +6,7 @@
 /*   By: dahmane <dahmane@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 00:54:46 by dahmane           #+#    #+#             */
-/*   Updated: 2025/02/14 16:37:12 by dahmane          ###   ########.fr       */
+/*   Updated: 2025/02/15 15:21:09 by dahmane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,26 +23,42 @@
 # include <errno.h>
 # include "printf/ft_printf.h"
 
-typedef struct	s_var	t_var;
+typedef struct	s_var	t_pipeto;
 struct s_var
 {
 	char	*path_line;
-	char	**commands;
+	char	*ok_path;
+	char	**commands_in;
+	char	**commands_out;
+	char	**paths;
+	char	**final_paths;
+	char	*infile;
+	char	*outfile;
 };
 
+// PIPEX /////////////////////////////////////////////////////////////////////////
+int		init(t_pipeto **pipeto, char **argv, char **env);
+
+// FREE /////////////////////////////////////////////////////////////////////////
+void	free_strs(char **strs);
+void	free_all(t_pipeto *pipeto);
 
 // UTILS /////////////////////////////////////////////////////////////////////////
 char	*ft_strnstr(const char *big, const char *little, size_t len);
-void    free_strs(char **strs);
+char	*ft_strjoin(char *s1, char *s2);
+
+// GET PATHS //////////////////////////////////////////////////////////////////////////
+void	find_path_line(char **path_line, char **env);
+int		join_paths(char **paths, char *command, char ***final_paths);
+char	*get_okpath(char **paths);
+int		get_paths(t_pipeto **pipeto, char **argv, char **env);
+
+// GET COMMANDS //////////////////////////////////////////////////////////////////////////
+int		get_commands(t_pipeto **pipeto, char **argv);
 
 // SPLIT n stuff /////////////////////////////////////////////////////////////////////////
 char	**ft_split(char const *s, char c);
 char	**ft_split1(char const *s, char c);
-void    ft_print(char **strs);
-char	*ft_strjoin(char *s1, char *s2);
-
-// FIND PATHS //////////////////////////////////////////////////////////////////////////
-void    find_path_line(char **path_line, char **env);
-int    join_paths(char **paths, char *command, char ***final_paths);
+void	ft_print(char **strs);
 
 #endif

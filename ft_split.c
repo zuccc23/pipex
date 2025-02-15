@@ -6,13 +6,13 @@
 /*   By: dahmane <dahmane@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 12:44:18 by dahmane           #+#    #+#             */
-/*   Updated: 2025/02/14 12:13:06 by dahmane          ###   ########.fr       */
+/*   Updated: 2025/02/15 14:16:49 by dahmane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void    ft_print(char **strs)
+void	ft_print(char **strs)
 {
         int     i;
         int     j;

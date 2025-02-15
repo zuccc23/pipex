@@ -6,116 +6,117 @@
 /*   By: dahmane <dahmane@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 00:54:28 by dahmane           #+#    #+#             */
-/*   Updated: 2025/02/14 16:37:44 by dahmane          ###   ########.fr       */
+/*   Updated: 2025/02/15 15:30:22 by dahmane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
+int init(t_pipeto **pipeto, char **argv, char **env)
+{
+	*pipeto = malloc(sizeof(t_pipeto));
+	if (!(*pipeto))
+		return (1);
+	if (get_commands(&(*pipeto), argv) == 1)
+	{
+		free_all(*pipeto);
+		return (1);
+	}
+	if (get_paths(&(*pipeto), argv, env) == 1)
+	{
+		free_all(*pipeto);
+		return (1);
+	}
+	(*pipeto)->infile = argv[1];
+	(*pipeto)->outfile = argv[4];
+	return (0);
+}
+
 int main (int argc, char **argv, char **env)
 {
-    int     id = 0;
-    int     id2 = 0;
-    int     fd[2];
-    char    buffer[100];
-    int     fd2[2];
-    char    *path_line;
-    char    **commands;
-    char    **paths;
-    char    **final_paths;
-    int     i = 0;
-    t_var   var;
-    // GET INPUT //////////////////////////////////////////////////////////////
-    
-    commands = ft_split1(argv[2], ' ');
-    // ft_print(commands);
-    // free_strs(commands);
-    
-    // GET PATHS //////////////////////////////////////////////////////////////
-    
-    // while (*env) {
-    //     printf("%s\n", *env);
-    //     env++;
-    // }
-    find_path_line(&path_line, env);
-    // ft_printf("%s\n", path_line);
-    paths = ft_split(path_line + 5, ':');
-    if (!paths)
-        return (0);
-    if (join_paths(paths, commands[0], &final_paths) == 1)
-        return (0);
-    // ft_print(final_paths);
-    while (final_paths[i])
-    {
-        if (access(final_paths[i], F_OK) == 0)
-        break;
-        i++;
-    }
-    // free_strs(paths);
-    // free_strs(final_paths);
-    
-    // USE EXECVE //////////////////////////////////////////////////////////////
-    
-    fd[1] = open(argv[1], O_RDONLY);
-    dup2(fd[1], STDIN_FILENO);
-    // dup2(fd[1], STDOUT_FILENO);
-    execve(final_paths[i], commands, env);
+	int     id = 0;
+	int     id2 = 0;
+	int     fd[2];
+	int     fd2[2];
+	t_pipeto   *pipeto;
 
-    // DOUBLE PIPE ////////////////////////////////////////////////////////////
-    
-    // pipe(fd);
-    // pipe(fd2);
-    // id = fork();
-    // if (id == 0)
-    // {
-    //     int nb = 5;
-    //     close(fd[0]);
-    //     write(fd[1], &nb, sizeof(int));
-    //     close(fd[1]);
+	// INIT //////////////////////////////////////////////////////////////
 
-    //     close(fd2[1]);
-    //     read(fd2[0], &nb, sizeof(int));
-    //     close(fd2[0]);
-    //     printf("%d\n", nb);
-    // }
-    // if (id != 0)
-    // {
-    //     int nb2;
-    //     close(fd[1]);
-    //     read(fd[0], &nb2, sizeof(int));
-    //     close(fd[0]);
-    //     // printf("%d\n", nb2);
-    //     nb2 *= 2;
+	if (argc != 5)
+		return (ft_printf("Error : Incorrect input"));
+	if (init(&pipeto, argv, env) == 1)
+		return (ft_printf("Error : Malloc failed"));
 
-    //     close(fd2[0]);
-    //     write(fd2[1], &nb2, sizeof(int));
-    //     close(fd2[1]);
-    // }
-    
-    // TEST PROCESS ID //////////////////////////////////////////////////////
-    // id = fork();
-    // id2 = fork();
-    // if (id == 0)
-    // {
-    //     if (id2 == 0)
-    //     {
-    //         printf("child2\n");
-    //     }
-    //     else
-    //     {
-    //         // wait(NULL);
-    //         printf("parent\n");
-    //     }
-    // }
-    // else 
-    // {
-    //     if (id2 == 0)
-    //     {
-    //         printf("child1\n");
-    //     }
-    //     else
-    //     {
-    //         printf("main\n");
-    //     }
-    // }
+	// TEST INIT //////////////////////////////////////////////////////////////
+
+	// ft_print(pipeto->commands_out);
+	// ft_printf("%s\n", pipeto->ok_path);
+	// free_all(pipeto);
+
+	// USE EXECVE //////////////////////////////////////////////////////////////
+	
+	id = open(pipeto->infile, O_RDONLY);
+	id2 = open(pipeto->outfile, O_WRONLY);
+	dup2(id, STDIN_FILENO);
+	dup2(id2, STDOUT_FILENO);
+	execve(pipeto->ok_path, pipeto->commands_in, env);
+
+	// DOUBLE PIPE ////////////////////////////////////////////////////////////
+	
+	// pipe(fd);
+	// pipe(fd2);
+	// id = fork();
+	// if (id == 0)
+	// {
+	//     int nb = 5;
+	//     close(fd[0]);
+	//     write(fd[1], &nb, sizeof(int));
+	//     close(fd[1]);
+
+	//     close(fd2[1]);
+	//     read(fd2[0], &nb, sizeof(int));
+	//     close(fd2[0]);
+	//     printf("%d\n", nb);
+	// }
+	// if (id != 0)
+	// {
+	//     int nb2;
+	//     close(fd[1]);
+	//     read(fd[0], &nb2, sizeof(int));
+	//     close(fd[0]);
+	//     // printf("%d\n", nb2);
+	//     nb2 *= 2;
+
+	//     close(fd2[0]);
+	//     write(fd2[1], &nb2, sizeof(int));
+	//     close(fd2[1]);
+	// }
+	
+	// TEST PROCESS ID //////////////////////////////////////////////////////
+	// id = fork();
+	// id2 = fork();
+	// if (id == 0)
+	// {
+	//     if (id2 == 0)
+	//     {
+	//         printf("child2\n");
+	//     }
+	//     else
+	//     {
+	//         // wait(NULL);
+	//         printf("parent\n");
+	//     }
+	// }
+	// else 
+	// {
+	//     if (id2 == 0)
+	//     {
+	//         printf("child1\n");
+	//     }
+	//     else
+	//     {
+	//         printf("main\n");
+	//     }
+	// }
 }
+

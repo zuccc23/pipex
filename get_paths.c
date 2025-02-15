@@ -1,16 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   paths.c                                            :+:      :+:    :+:   */
+/*   get_paths.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dahmane <dahmane@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/14 14:19:51 by dahmane           #+#    #+#             */
-/*   Updated: 2025/02/14 14:22:50 by dahmane          ###   ########.fr       */
+/*   Created: 2025/02/15 14:02:01 by dahmane           #+#    #+#             */
+/*   Updated: 2025/02/15 15:10:44 by dahmane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
+
+int	get_paths(t_pipeto **pipeto, char **argv, char **env)
+{
+	find_path_line(&(*pipeto)->path_line, env);
+	(*pipeto)->paths = ft_split((*pipeto)->path_line + 5, ':');
+    if (!(*pipeto)->paths)
+		return (1);
+	join_paths((*pipeto)->paths, (*pipeto)->commands_in[0], &(*pipeto)->final_paths);
+    if (!(*pipeto)->final_paths)
+		return (1);
+	(*pipeto)->ok_path = get_okpath((*pipeto)->final_paths);
+	return (0);
+}
+
+char	*get_okpath(char **paths)
+{
+	int	i;
+	
+	i = 0;
+	while (access(paths[i], F_OK) != 0 && paths[i])
+		i++;
+	return (paths[i]);
+}
 
 void    find_path_line(char **path_line, char **env)
 {
