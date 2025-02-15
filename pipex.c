@@ -6,7 +6,7 @@
 /*   By: dahmane <dahmane@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 00:54:28 by dahmane           #+#    #+#             */
-/*   Updated: 2025/02/15 15:30:22 by dahmane          ###   ########.fr       */
+/*   Updated: 2025/02/15 16:16:59 by dahmane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,9 @@ int init(t_pipeto **pipeto, char **argv, char **env)
 	if (!(*pipeto))
 		return (1);
 	if (get_commands(&(*pipeto), argv) == 1)
-	{
-		free_all(*pipeto);
 		return (1);
-	}
 	if (get_paths(&(*pipeto), argv, env) == 1)
-	{
-		free_all(*pipeto);
 		return (1);
-	}
 	(*pipeto)->infile = argv[1];
 	(*pipeto)->outfile = argv[4];
 	return (0);
@@ -45,7 +39,7 @@ int main (int argc, char **argv, char **env)
 	if (argc != 5)
 		return (ft_printf("Error : Incorrect input"));
 	if (init(&pipeto, argv, env) == 1)
-		return (ft_printf("Error : Malloc failed"));
+		return (return_error(pipeto, id));
 
 	// TEST INIT //////////////////////////////////////////////////////////////
 
@@ -56,9 +50,11 @@ int main (int argc, char **argv, char **env)
 	// USE EXECVE //////////////////////////////////////////////////////////////
 	
 	id = open(pipeto->infile, O_RDONLY);
-	id2 = open(pipeto->outfile, O_WRONLY);
+	if (id == -1)
+		return (return_error(pipeto, id));
+	// id2 = open(pipeto->outfile, O_WRONLY);
 	dup2(id, STDIN_FILENO);
-	dup2(id2, STDOUT_FILENO);
+	// dup2(id2, STDOUT_FILENO);
 	execve(pipeto->ok_path, pipeto->commands_in, env);
 
 	// DOUBLE PIPE ////////////////////////////////////////////////////////////
