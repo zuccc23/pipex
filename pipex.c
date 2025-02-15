@@ -6,7 +6,7 @@
 /*   By: dahmane <dahmane@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 00:54:28 by dahmane           #+#    #+#             */
-/*   Updated: 2025/02/15 17:14:02 by dahmane          ###   ########.fr       */
+/*   Updated: 2025/02/15 18:53:29 by dahmane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ int main (int argc, char **argv, char **env)
 	int		pid[2];
 	int     fd[2];
 	int     fd2[2];
+	pid_t	pid1;
+	pid_t	pid2;
 	t_pipeto   *pipeto;
 
 	// INIT //////////////////////////////////////////////////////////////
@@ -52,9 +54,14 @@ int main (int argc, char **argv, char **env)
 
 	pid[0] = fork();
 	if (pid[0] != 0)
+	{
+		wait(NULL);
 		pid[1] = fork();
-	ft_printf("test\n");
-	// FIRST CHILD? //////////////////////////////////////////////////////////////
+	}
+	
+	ft_printf("process id 1 = %d, process id 2 =%d\n", getpid(), getppid());
+	// FIRST CHILD //////////////////////////////////////////////////////////////
+	
 	
 	// id = open(pipeto->infile, O_RDONLY);
 	// if (id == -1)
