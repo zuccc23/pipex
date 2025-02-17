@@ -6,7 +6,7 @@
 /*   By: dahmane <dahmane@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 00:54:46 by dahmane           #+#    #+#             */
-/*   Updated: 2025/02/15 16:06:31 by dahmane          ###   ########.fr       */
+/*   Updated: 2025/02/16 14:46:17 by dahmane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,13 +34,14 @@ struct s_var
 	char	**final_paths;
 	char	*infile;
 	char	*outfile;
+	int		fd;
 };
 
 // PIPEX /////////////////////////////////////////////////////////////////////////
 int		init(t_pipeto **pipeto, char **argv, char **env);
 
 // FREE /////////////////////////////////////////////////////////////////////////
-int     return_error(t_pipeto *pipeto, int id);
+int     return_error_input(t_pipeto *pipeto);
 void	free_strs(char **strs);
 void	free_all(t_pipeto *pipeto);
 

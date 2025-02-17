@@ -6,29 +6,17 @@
 /*   By: dahmane <dahmane@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 14:14:11 by dahmane           #+#    #+#             */
-/*   Updated: 2025/02/15 16:11:44 by dahmane          ###   ########.fr       */
+/*   Updated: 2025/02/16 14:25:41 by dahmane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-int     return_error(t_pipeto *pipeto, int id)
+int     return_error_input(t_pipeto *pipeto)
 {
-    if (pipeto != NULL)
-    {
-        free_all(pipeto);
-        if (id == 0)
-        {
-            errno = ENOMEM;
-            perror("Malloc failed");
-            return (1);
-        }
-    }
-    if (id == -1)
-    {
-        perror("Open");
-        return (1);
-    }
+    free_all(pipeto);
+    errno = ENOMEM;
+    perror("Malloc failed");
     return (1);
 }
 
