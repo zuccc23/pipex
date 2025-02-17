@@ -6,7 +6,7 @@
 /*   By: dahmane <dahmane@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 00:54:28 by dahmane           #+#    #+#             */
-/*   Updated: 2025/02/17 12:26:28 by dahmane          ###   ########.fr       */
+/*   Updated: 2025/02/17 14:47:41 by dahmane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,16 +26,87 @@ int init(t_pipeto **pipeto, char **argv, char **env)
 	return (0);
 }
 
+void	child1(t_pipeto **pipeto, int *id, int *id2, int *fd, char **env)
+{
+	// CLOSE READ END PIPE
+		close(fd[0]);
+		
+		// OPEN INFILE
+		(*pipeto)->fd_in = open((*pipeto)->infile, O_RDONLY);
+		// if (pipeto->fd_in == -1)
+		// 	return (return_error(pipeto, id));
+		
+		// USE INFILE AS INPUT, AND PIPE WRITE END AS OUTPUT
+		dup2((*pipeto)->fd_in, STDIN_FILENO);
+		dup2(fd[1], STDOUT_FILENO);
+
+		// CLOSE WRITE END PIPE AND INFILE FD
+		close(fd[1]);
+		close((*pipeto)->fd_in);
+		
+		// THING I WANT TO EXECUTE
+		// printf("test");
+		execve((*pipeto)->ok_path, (*pipeto)->commands_in, env);
+}
+
+void	child2(t_pipeto **pipeto, int *id, int *id2, int *fd, char **env)
+{
+	// CLOSE WRITE END PIPE
+			close(fd[1]);
+			
+			// OPEN OUTFILE
+			(*pipeto)->fd_out = open((*pipeto)->outfile, O_WRONLY);
+			// READ FROM READ END PIPE
+			// read(fd[0], buff, sizeof(buff));
+			
+			// USE READ END AS INPUT, AND OUTFILE AS OUTPUT
+			dup2(fd[0], STDIN_FILENO);
+			dup2((*pipeto)->fd_out, STDOUT_FILENO);
+
+			// CLOSE READ END PIPE AND OUTFILE FD
+			close(fd[0]);
+			close((*pipeto)->fd_out);
+
+			// THING I WANT TO EXECUTE
+			// ft_printf("read from child 2 :%s\n", buff);
+			execve((*pipeto)->ok_path_out, (*pipeto)->commands_out, env);
+}
+
+void	parent(t_pipeto **pipeto, int *id, int *id2, int *fd, char **env)
+{
+	// CLOSE FILE DESCRIPTORS OF PIPE
+			close(fd[0]);
+			close(fd[1]);
+			
+			// WAIT FOR CHILDREN
+			waitpid(*id, NULL, 0);
+			waitpid(*id2, NULL, 0);
+			
+			// FREE PIPETO
+			free_all(*pipeto);
+}
+
+int	fork_and_pipe(int *fd, int *id, int *id2)
+{
+	if (pipe(fd) == -1)
+		return (1);
+	*id = fork();
+	if (*id == -1)
+		return (1);
+	if (*id != 0)
+	{
+		*id2 = fork();
+		if (*id2 == -1)
+			return (1);
+	}
+	return (0);
+}
+
 int main (int argc, char **argv, char **env)
 {
 	int     id;
 	int     id2;
-	int		pid[2];
 	int     fd[2];
-	int     fd2[2];
-	char	buff[2000];
-	pid_t	pid1;
-	pid_t	pid2;
 	t_pipeto   *pipeto;
 
 	// INIT //////////////////////////////////////////////////////////////
@@ -44,7 +115,90 @@ int main (int argc, char **argv, char **env)
 		return (ft_printf("Error : Incorrect input\n"));
 	if (init(&pipeto, argv, env) == 1)
 		return (return_error_input(pipeto));
+	
+	// FORK AND PIPE //////////////////////////////////////////////////////
+	// pipe(fd);
+	// id = fork();
+	// if (id != 0)
+	// 	id2 = fork();
+	if (fork_and_pipe(fd, &id, &id2) == 1)
+		
+	
+	// CHILD 1 ////////////////////////////////////////////////////////////
+	if (id == 0)
+	{
+		// // CLOSE READ END PIPE
+		// close(fd[0]);
+		
+		// // OPEN INFILE
+		// pipeto->fd_in = open(pipeto->infile, O_RDONLY);
+		// // if (pipeto->fd_in == -1)
+		// // 	return (return_error(pipeto, id));
+		
+		// // USE INFILE AS INPUT, AND PIPE WRITE END AS OUTPUT
+		// dup2(pipeto->fd_in, STDIN_FILENO);
+		// dup2(fd[1], STDOUT_FILENO);
 
+		// // CLOSE WRITE END PIPE AND INFILE FD
+		// close(fd[1]);
+		// close(pipeto->fd_in);
+		
+		// // THING I WANT TO EXECUTE
+		// // printf("test");
+		// execve(pipeto->ok_path, pipeto->commands_in, env);
+		child1(&pipeto, &id, &id2, fd, env);
+	}
+	
+	// CHILD 2 ////////////////////////////////////////////////////////////
+	else 
+	{
+	    if (id2 == 0)
+	    {
+			// // CLOSE WRITE END PIPE
+			// close(fd[1]);
+			
+			// // OPEN OUTFILE
+			// pipeto->fd_out = open(pipeto->outfile, O_WRONLY);
+			// // READ FROM READ END PIPE
+			// // read(fd[0], buff, sizeof(buff));
+			
+			// // USE READ END AS INPUT, AND OUTFILE AS OUTPUT
+			// dup2(fd[0], STDIN_FILENO);
+			// dup2(pipeto->fd_out, STDOUT_FILENO);
+
+			// // CLOSE READ END PIPE AND OUTFILE FD
+			// close(fd[0]);
+			// close(pipeto->fd_out);
+
+			// // THING I WANT TO EXECUTE
+			// // ft_printf("read from child 2 :%s\n", buff);
+			// execve(pipeto->ok_path_out, pipeto->commands_out, env);
+			child2(&pipeto, &id, &id2, fd, env);
+	    }
+		// MAIN ////////////////////////////////////////////////////////////
+	    else
+	    {
+			// // CLOSE FILE DESCRIPTORS OF PIPE
+			// close(fd[0]);
+			// close(fd[1]);
+			
+			// // WAIT FOR CHILDREN
+			// waitpid(id, NULL, 0);
+			// waitpid(id2, NULL, 0);
+
+			
+			// // FREE FD OF INFILE AND OUTFILE
+			// // if (pipeto->fd_in > 0)
+			// // 	close(pipeto->fd_in);
+			// // if (pipeto->fd_out > 0)
+			// // 	close(pipeto->fd_out);
+			
+			// // FREE PIPETO
+			// free_all(pipeto);
+			parent(&pipeto, &id, &id2, fd, env);
+	    }
+	}
+	
 	// TEST INIT //////////////////////////////////////////////////////////////
 
 	// ft_print(pipeto->final_paths_out);
@@ -101,75 +255,5 @@ int main (int argc, char **argv, char **env)
 	//     write(fd2[1], &nb2, sizeof(int));
 	//     close(fd2[1]);
 	// }
-	
-	// FORK AND PIPE //////////////////////////////////////////////////////
-	pipe(fd);
-	// pipe(fd2);
-	id = fork();
-	if (id != 0)
-		id2 = fork();
-	
-	// CHILD 1 ////////////////////////////////////////////////////////////
-	if (id == 0)
-	{
-		// CLOSE READ END PIPE
-		close(fd[0]);
-		
-		// OPEN INFILE
-		pipeto->fd_in = open(pipeto->infile, O_RDONLY);
-		// if (pipeto->fd_in == -1)
-		// 	return (return_error(pipeto, id));
-		
-		// USE INFILE AS INPUT, AND PIPE WRITE END AS OUTPUT
-		dup2(pipeto->fd_in, STDIN_FILENO);
-		dup2(fd[1], STDOUT_FILENO);
-
-		// CLOSE WRITE END PIPE
-		close(fd[1]);
-		
-		// THING I WANT TO EXECUTE
-		printf("test");
-
-		// CLOSE INFILE FD
-		close(pipeto->fd_in);
-
-		// FREE PIPETO
-		free_all(pipeto);
-		// execve(pipeto->ok_path, pipeto->commands_in, env);
-		
-	}
-	
-	// CHILD 2 ////////////////////////////////////////////////////////////
-	else 
-	{
-	    if (id2 == 0)
-	    {
-			close(fd[1]);
-			
-			pipeto->fd_out = open(pipeto->outfile, O_WRONLY);
-			read(fd[0], buff, sizeof(buff));
-			// dup2(fd[0], STDIN_FILENO);
-			dup2(pipeto->fd_out, STDOUT_FILENO);
-			close(fd[0]);
-			ft_printf("read from child 2 :%s\n", buff);
-			close(pipeto->fd_out);
-			free_all(pipeto);
-			// execve(pipeto->ok_path_out, pipeto->commands_out, env);
-	    }
-		// MAIN ////////////////////////////////////////////////////////////
-	    else
-	    {
-			// CLOSE FILE DESCRIPTORS OF PIPE
-			close(fd[0]);
-			close(fd[1]);
-			
-			// WAIT FOR CHILDREN
-			waitpid(id, NULL, 0);
-			waitpid(id2, NULL, 0);
-
-			// FREE PIPETO
-			free_all(pipeto);
-	    }
-	}
 }
 
