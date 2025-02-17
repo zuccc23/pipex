@@ -6,7 +6,7 @@
 /*   By: dahmane <dahmane@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 14:14:11 by dahmane           #+#    #+#             */
-/*   Updated: 2025/02/16 14:25:41 by dahmane          ###   ########.fr       */
+/*   Updated: 2025/02/17 11:06:24 by dahmane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ void	free_all(t_pipeto *pipeto)
 	    free_strs(pipeto->paths);
     if (pipeto->final_paths != NULL)
 	    free_strs(pipeto->final_paths);
+    if (pipeto->final_paths_out != NULL)
+	    free_strs(pipeto->final_paths_out);
 
 	if (pipeto != NULL)
 	    free(pipeto);

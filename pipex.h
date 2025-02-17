@@ -6,7 +6,7 @@
 /*   By: dahmane <dahmane@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 00:54:46 by dahmane           #+#    #+#             */
-/*   Updated: 2025/02/16 14:46:17 by dahmane          ###   ########.fr       */
+/*   Updated: 2025/02/17 11:12:30 by dahmane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,16 @@ struct s_var
 {
 	char	*path_line;
 	char	*ok_path;
+	char	*ok_path_out;
 	char	**commands_in;
 	char	**commands_out;
 	char	**paths;
 	char	**final_paths;
+	char	**final_paths_out;
 	char	*infile;
 	char	*outfile;
-	int		fd;
+	int		fd_in;
+	int		fd_out;
 };
 
 // PIPEX /////////////////////////////////////////////////////////////////////////
@@ -54,6 +57,7 @@ void	find_path_line(char **path_line, char **env);
 int		join_paths(char **paths, char *command, char ***final_paths);
 char	*get_okpath(char **paths);
 int		get_paths(t_pipeto **pipeto, char **argv, char **env);
+int		get_paths_out(t_pipeto **pipeto, char **argv, char **env);
 
 // GET COMMANDS //////////////////////////////////////////////////////////////////////////
 int		get_commands(t_pipeto **pipeto, char **argv);
