@@ -6,7 +6,7 @@
 /*   By: dahmane <dahmane@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 00:54:46 by dahmane           #+#    #+#             */
-/*   Updated: 2025/02/17 13:40:49 by dahmane          ###   ########.fr       */
+/*   Updated: 2025/02/17 19:07:08 by dahmane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,10 @@ struct s_var
 int		init(t_pipeto **pipeto, char **argv, char **env);
 
 // FREE /////////////////////////////////////////////////////////////////////////
-int     return_error_input(t_pipeto *pipeto);
+int     return_error_input(t_pipeto **pipeto, int *fd);
 void	free_strs(char **strs);
-void	free_all(t_pipeto *pipeto);
+void	free_all(t_pipeto **pipeto, int *fd);
+void    close_fd(t_pipeto **pipeto, int *fd);
 
 // UTILS /////////////////////////////////////////////////////////////////////////
 char	*ft_strnstr(const char *big, const char *little, size_t len);
