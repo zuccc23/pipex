@@ -6,7 +6,7 @@
 /*   By: dahmane <dahmane@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 14:10:53 by dahmane           #+#    #+#             */
-/*   Updated: 2025/02/15 14:15:46 by dahmane          ###   ########.fr       */
+/*   Updated: 2025/02/19 12:52:29 by dahmane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ char	*ft_strjoin(char *s1, char *s2)
 	s3[i] = '\0';
 	return (s3);
 }
+
 char	*ft_strnstr(const char *big, const char *little, size_t len)
 {
 	size_t			i;
@@ -61,4 +62,3 @@ char	*ft_strnstr(const char *big, const char *little, size_t len)
 	}
 	return (0);
 }
-

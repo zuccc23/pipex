@@ -1,5 +1,6 @@
 {
     "files.associations": {
-        "exammario.C": "cpp"
+        "exammario.C": "cpp",
+        "pipex.h": "c"
     }
 }

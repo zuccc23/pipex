@@ -6,7 +6,7 @@
 /*   By: dahmane <dahmane@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 12:44:18 by dahmane           #+#    #+#             */
-/*   Updated: 2025/02/15 14:16:49 by dahmane          ###   ########.fr       */
+/*   Updated: 2025/02/19 12:43:18 by dahmane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,24 +14,24 @@
 
 void	ft_print(char **strs)
 {
-        int     i;
-        int     j;
+	int	i;
+	int	j;
 
-        i = 0;
-        j = 0;
-        while (strs[i] != NULL)
-        {
-                while (strs[i][j])
-                {
-                        write (1, &strs[i][j], 1);
-                        j++;
-                }
-                write (1, "\n", 1);
-                i++;
-                j = 0;
-        }
-        if (strs[i] == NULL)
-                write (1, "null", 4);
+	i = 0;
+	j = 0;
+	while (strs[i] != NULL)
+	{
+		while (strs[i][j])
+		{
+			write (1, &strs[i][j], 1);
+			j++;
+		}
+		write (1, "\n", 1);
+		i++;
+		j = 0;
+	}
+	if (strs[i] == NULL)
+		write (1, "null", 4);
 }
 
 static int	count_word(const char *s, char c)
@@ -116,6 +116,5 @@ char	**ft_split(char const *s, char c)
 		return (NULL);
 	if (!add_words(strs, s, c))
 		return (NULL);
-	// ft_print(strs);
 	return (strs);
 }

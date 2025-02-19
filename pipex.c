@@ -6,7 +6,7 @@
 /*   By: dahmane <dahmane@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 00:54:28 by dahmane           #+#    #+#             */
-/*   Updated: 2025/02/18 17:45:26 by dahmane          ###   ########.fr       */
+/*   Updated: 2025/02/19 12:51:40 by dahmane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 int init(t_pipeto **pipeto, char **argv, char **env)
 {
+	*pipeto = NULL;
 	*pipeto = malloc(sizeof(t_pipeto));
 	if (!(*pipeto))
 		return (1);
@@ -33,7 +34,7 @@ int	child1(t_pipeto **pipeto, int *fd, char **env)
 	// CLOSE READ END PIPE
 	if (close(fd[0]) == -1)
 		return (1);
-		
+	fd[0] = -1;
 	// OPEN INFILE
 	(*pipeto)->fd_in = open((*pipeto)->infile, O_RDONLY);
 	if ((*pipeto)->fd_in == -1)
@@ -64,9 +65,9 @@ int	child2(t_pipeto **pipeto, int *fd, char **env)
 	// CLOSE WRITE END PIPE
 	if (close(fd[1]) == -1)
 		return (1);
-			
+	fd[1] = -1;
 	// OPEN OUTFILE
-	(*pipeto)->fd_out = open((*pipeto)->outfile, O_WRONLY);
+	(*pipeto)->fd_out = open((*pipeto)->outfile, O_WRONLY | O_CREAT | O_TRUNC);
 	if ((*pipeto)->fd_out == -1)
 		return (1);
 	
@@ -84,7 +85,7 @@ int	child2(t_pipeto **pipeto, int *fd, char **env)
 
 	// THING I WANT TO EXECUTE
 	// ft_printf("read from child 2 :%s\n", buff);
-	if (execve((*pipeto)->ok_path_out, (*pipeto)->commands_out, env) == -1)
+	if (execve((*pipeto)->ok_path_out, (*pipeto)->commands_o, env) == -1)
 		return (1);
 	
 	return (0);
@@ -148,11 +149,6 @@ int main (int argc, char **argv, char **env)
 	fd[1] = -1;
 	
 	// FORK AND PIPE //////////////////////////////////////////////////////
-	// pipe(fd);
-	// id = fork();
-	// if (id != 0)
-	// 	id2 = fork();
-	// if (fork_and_pipe(fd, &id, &id2) == 1)
 	if (fork_and_pipe(fd, &id, &id2) == 1)
 	{
 		free_all(&pipeto, fd);
@@ -164,12 +160,14 @@ int main (int argc, char **argv, char **env)
 	// CHILD 1 ////////////////////////////////////////////////////////////
 	if (id == 0)
 	{
+		// ft_printf("%d %d\n", fd[0], fd[1]);
 		// ft_printf("test : is it entering child 1");
 		if (child1(&pipeto, fd, env) == 1)
 		{
-			free_all(&pipeto, fd);
 			perror("Error");
+			free_all(&pipeto, fd);
 			exit(-1);
+			// ft_printf("where is error\n");
 		}
 	}
 	
