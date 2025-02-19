@@ -6,7 +6,7 @@
 /*   By: dahmane <dahmane@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 14:14:11 by dahmane           #+#    #+#             */
-/*   Updated: 2025/02/19 12:59:23 by dahmane          ###   ########.fr       */
+/*   Updated: 2025/02/19 14:07:11 by dahmane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,25 @@
 
 int	return_error_input(t_pipeto **pipeto, int *fd)
 {
+	if (!(*pipeto)->ok_path && (*pipeto)->f_path)
+		ft_printf("Error: command not found\n");
+	else if (!(*pipeto)->ok_path_out && (*pipeto)->f_patho)
+		ft_printf("Error: command not found");
+	else
+	{
+		errno = ENOMEM;
+		perror("Error");
+	}
 	if (pipeto && *pipeto)
 		free_all(&(*pipeto), fd);
-	errno = ENOMEM;
-	perror("Malloc failed");
 	return (1);
+}
+
+void	return_error(t_pipeto **pipeto, int *fd)
+{
+	free_all(&(*pipeto), fd);
+	perror("Error");
+	exit(-1);
 }
 
 void	free_all(t_pipeto **pipeto, int *fd)

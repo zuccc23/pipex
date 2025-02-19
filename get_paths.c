@@ -6,13 +6,13 @@
 /*   By: dahmane <dahmane@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 14:02:01 by dahmane           #+#    #+#             */
-/*   Updated: 2025/02/19 12:51:40 by dahmane          ###   ########.fr       */
+/*   Updated: 2025/02/19 13:50:57 by dahmane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-int	get_paths(t_pipeto **pipeto, char **argv, char **env)
+int	get_paths(t_pipeto **pipeto, char **env)
 {
 	find_path_line(&(*pipeto)->path_line, env);
 	(*pipeto)->paths = ft_split((*pipeto)->path_line + 5, ':');
@@ -24,6 +24,8 @@ int	get_paths(t_pipeto **pipeto, char **argv, char **env)
 		return (1);
 	(*pipeto)->ok_path = get_okpath((*pipeto)->f_path);
 	(*pipeto)->ok_path_out = get_okpath((*pipeto)->f_patho);
+	if (!(*pipeto)->ok_path || !(*pipeto)->ok_path_out)
+		return (1);
 	return (0);
 }
 
@@ -56,7 +58,6 @@ void	find_path_line(char **path_line, char **env)
 int	join_paths(char **paths, char *command, char ***f_path)
 {
 	int	i;
-	int	j;
 
 	i = 0;
 	while (paths[i])

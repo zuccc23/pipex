@@ -6,7 +6,7 @@
 /*   By: dahmane <dahmane@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 00:54:46 by dahmane           #+#    #+#             */
-/*   Updated: 2025/02/19 12:56:23 by dahmane          ###   ########.fr       */
+/*   Updated: 2025/02/19 13:39:50 by dahmane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@
 typedef struct s_var	t_pipeto;
 struct s_var
 {
+	int		id;
+	int		id2;
 	char	*path_line;
 	char	*ok_path;
 	char	*ok_path_out;
@@ -40,11 +42,18 @@ struct s_var
 	int		fd_out;
 };
 
-// PIPEX ///////////////////////////////////////////////
-int		init(t_pipeto **pipeto, char **argv, char **env);
+// PIPEX /////////////////////////////////////////////
+int		parent(t_pipeto **pipeto, int *fd);
+int		child1(t_pipeto **pipeto, int *fd, char **env);
+int		child2(t_pipeto **pipeto, int *fd, char **env);
+
+// INIT ///////////////////////////////////////////////
+int		init(t_pipeto **pipeto, char **argv, char **env, int *fd);
+int		fork_and_pipe(t_pipeto **pipeto, int *fd);
 
 // FREE ///////////////////////////////////////////////
 int		return_error_input(t_pipeto **pipeto, int *fd);
+void	return_error(t_pipeto **pipeto, int *fd);
 void	free_strs(char **strs);
 void	free_all(t_pipeto **pipeto, int *fd);
 void	close_fd(t_pipeto **pipeto, int *fd);
@@ -57,7 +66,7 @@ char	*ft_strjoin(char *s1, char *s2);
 void	find_path_line(char **path_line, char **env);
 int		join_paths(char **paths, char *command, char ***f_path);
 char	*get_okpath(char **paths);
-int		get_paths(t_pipeto **pipeto, char **argv, char **env);
+int		get_paths(t_pipeto **pipeto, char **env);
 
 // GET COMMANDS ///////////////////////////////////////////////
 int		get_commands(t_pipeto **pipeto, char **argv);
