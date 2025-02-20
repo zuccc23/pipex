@@ -6,7 +6,7 @@
 /*   By: dahmane <dahmane@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 00:54:46 by dahmane           #+#    #+#             */
-/*   Updated: 2025/02/19 13:39:50 by dahmane          ###   ########.fr       */
+/*   Updated: 2025/02/20 18:11:36 by dahmane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int		init(t_pipeto **pipeto, char **argv, char **env, int *fd);
 int		fork_and_pipe(t_pipeto **pipeto, int *fd);
 
 // FREE ///////////////////////////////////////////////
-int		return_error_input(t_pipeto **pipeto, int *fd);
+int		return_error_input(t_pipeto **pipeto, int *fd, int argc);
 void	return_error(t_pipeto **pipeto, int *fd);
 void	free_strs(char **strs);
 void	free_all(t_pipeto **pipeto, int *fd);

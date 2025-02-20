@@ -6,14 +6,16 @@
 /*   By: dahmane <dahmane@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 14:14:11 by dahmane           #+#    #+#             */
-/*   Updated: 2025/02/19 14:07:11 by dahmane          ###   ########.fr       */
+/*   Updated: 2025/02/20 18:12:29 by dahmane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-int	return_error_input(t_pipeto **pipeto, int *fd)
+int	return_error_input(t_pipeto **pipeto, int *fd, int argc)
 {
+	if (argc != 5)
+		return (1);
 	if (!(*pipeto)->ok_path && (*pipeto)->f_path)
 		ft_printf("Error: command not found\n");
 	else if (!(*pipeto)->ok_path_out && (*pipeto)->f_patho)

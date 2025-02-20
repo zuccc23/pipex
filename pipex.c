@@ -6,7 +6,7 @@
 /*   By: dahmane <dahmane@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 00:54:28 by dahmane           #+#    #+#             */
-/*   Updated: 2025/02/19 14:03:40 by dahmane          ###   ########.fr       */
+/*   Updated: 2025/02/20 18:11:45 by dahmane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,10 +75,8 @@ int	main(int argc, char **argv, char **env)
 	int			fd[2];
 	t_pipeto	*pipeto;
 
-	if (argc != 5)
-		return (ft_printf("Error : Incorrect input\n"));
-	if (init(&pipeto, argv, env, fd) == 1)
-		return (return_error_input(&pipeto, fd));
+	if (argc != 5 || init(&pipeto, argv, env, fd) == 1)
+		return (return_error_input(&pipeto, fd, argc));
 	if (fork_and_pipe(&pipeto, fd) == 1)
 		return_error(&pipeto, fd);
 	if (pipeto->id == 0)

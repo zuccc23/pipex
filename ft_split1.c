@@ -6,7 +6,7 @@
 /*   By: dahmane <dahmane@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 12:44:18 by dahmane           #+#    #+#             */
-/*   Updated: 2025/02/19 12:44:02 by dahmane          ###   ########.fr       */
+/*   Updated: 2025/02/20 18:27:15 by dahmane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,9 +85,7 @@ static int	add_words(char **strs, char const *s, char c)
 char	**ft_split1(char const *s, char c)
 {
 	char	**strs;
-	int		i;
 
-	i = 0;
 	if (!s)
 		return (NULL);
 	strs = malloc((count_word (s, c) + 1) * sizeof(char *));

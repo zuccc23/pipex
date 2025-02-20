@@ -6,7 +6,7 @@
 /*   By: dahmane <dahmane@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 13:02:13 by dahmane           #+#    #+#             */
-/*   Updated: 2025/02/19 14:05:15 by dahmane          ###   ########.fr       */
+/*   Updated: 2025/02/20 18:15:41 by dahmane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	init(t_pipeto **pipeto, char **argv, char **env, int *fd)
 	fd[0] = -1;
 	fd[1] = -1;
 	*pipeto = NULL;
-	// *pipeto = malloc(sizeof(t_pipeto));
+	*pipeto = malloc(sizeof(t_pipeto));
 	if (!(*pipeto))
 		return (1);
 	(*pipeto)->fd_in = -1;
