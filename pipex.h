@@ -6,7 +6,7 @@
 /*   By: dahmane <dahmane@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 00:54:46 by dahmane           #+#    #+#             */
-/*   Updated: 2025/02/20 18:11:36 by dahmane          ###   ########.fr       */
+/*   Updated: 2025/02/20 18:59:59 by dahmane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ struct s_var
 {
 	int		id;
 	int		id2;
+	int		ex_cd1;
+	int		ex_cd2;
 	char	*path_line;
 	char	*ok_path;
 	char	*ok_path_out;
