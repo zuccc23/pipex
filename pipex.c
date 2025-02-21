@@ -6,7 +6,7 @@
 /*   By: dahmane <dahmane@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 00:54:28 by dahmane           #+#    #+#             */
-/*   Updated: 2025/02/20 20:53:43 by dahmane          ###   ########.fr       */
+/*   Updated: 2025/02/21 15:10:26 by dahmane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,14 +66,13 @@ int	parent(t_pipeto **pipeto, int *fd)
 		return (1);
 	if (waitpid((*pipeto)->id2, &(*pipeto)->ex_cd2, 0) == -1)
 		return (1);
-	
 	(*pipeto)->ex_cd1 = ((*pipeto)->ex_cd1 >> 8) & 0xFF;
-	(*pipeto)->ex_cd2 = ((*pipeto)->ex_cd2 >> 8) & 0xFF; 
+	(*pipeto)->ex_cd2 = ((*pipeto)->ex_cd2 >> 8) & 0xFF;
 	if ((*pipeto)->ex_cd1 != 0 || (*pipeto)->ex_cd2 != 0)
-		{
-			free_all(&(*pipeto), fd);
-			exit(-1);
-		}
+	{
+		free_all(&(*pipeto), fd);
+		exit(-1);
+	}
 	free_all(&(*pipeto), fd);
 	return (0);
 }
@@ -82,7 +81,7 @@ int	main(int argc, char **argv, char **env)
 {
 	int			fd[2];
 	t_pipeto	*pipeto;
-// check for mem leaks 1 more time
+
 	if (argc != 5 || init(&pipeto, argv, env, fd) == 1)
 		return (return_error_input(&pipeto, fd, argc));
 	if (fork_and_pipe(&pipeto, fd) == 1)

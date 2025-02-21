@@ -6,7 +6,7 @@
 /*   By: dahmane <dahmane@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 14:02:01 by dahmane           #+#    #+#             */
-/*   Updated: 2025/02/19 13:50:57 by dahmane          ###   ########.fr       */
+/*   Updated: 2025/02/21 14:59:59 by dahmane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ char	*get_okpath(char **paths)
 	int	i;
 
 	i = 0;
-	while (access(paths[i], F_OK) != 0 && paths[i])
+	while (paths[i] && access(paths[i], F_OK) != 0)
 		i++;
 	return (paths[i]);
 }
