@@ -6,7 +6,7 @@
 /*   By: dahmane <dahmane@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 00:54:28 by dahmane           #+#    #+#             */
-/*   Updated: 2025/02/21 15:10:26 by dahmane          ###   ########.fr       */
+/*   Updated: 2025/02/21 15:24:22 by dahmane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int	parent(t_pipeto **pipeto, int *fd)
 	if ((*pipeto)->ex_cd1 != 0 || (*pipeto)->ex_cd2 != 0)
 	{
 		free_all(&(*pipeto), fd);
-		exit(-1);
+		exit(1);
 	}
 	free_all(&(*pipeto), fd);
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: dahmane <dahmane@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 12:44:18 by dahmane           #+#    #+#             */
-/*   Updated: 2025/02/20 18:27:15 by dahmane          ###   ########.fr       */
+/*   Updated: 2025/02/21 15:50:19 by dahmane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,13 @@ static char	*allocate_word(const char *s, char c)
 	i = 0;
 	while (s[i] && s[i] != c)
 	{
-		word[i] = s[i];
-		i++;
+		if (s[i] == '\'')
+			i++;
+		if (s[i])
+		{
+			word[i] = s[i];
+			i++;
+		}
 	}
 	word[i] = '\0';
 	return (word);
