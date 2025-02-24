@@ -6,7 +6,7 @@
 /*   By: dahmane <dahmane@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 14:14:11 by dahmane           #+#    #+#             */
-/*   Updated: 2025/02/21 15:29:01 by dahmane          ###   ########.fr       */
+/*   Updated: 2025/02/24 18:20:00 by dahmane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ int	return_error_input(t_pipeto **pipeto, int *fd, int argc)
 	if (argc != 5)
 		return (1);
 	if ((*pipeto) && !(*pipeto)->ok_path && (*pipeto)->f_path)
-		ft_printf("Error: command not found\n");
+		ft_putstr_fd("Error: command not found\n", 2);
 	else if ((*pipeto) && !(*pipeto)->ok_path_out && (*pipeto)->f_patho)
-		ft_printf("Error: command not found\n");
+		ft_putstr_fd("Error: command not found\n", 2);
 	else
 	{
 		errno = ENOMEM;
@@ -65,11 +65,11 @@ void	close_fd(t_pipeto **pipeto, int *fd)
 			close((*pipeto)->fd_in);
 			(*pipeto)->fd_in = -1;
 		}
-		if ((*pipeto)->fd_out != -1)
+		if ((*pipeto)->fd_o != -1)
 		{
 			ft_printf("test2");
-			close((*pipeto)->fd_out);
-			(*pipeto)->fd_out = -1;
+			close((*pipeto)->fd_o);
+			(*pipeto)->fd_o = -1;
 		}
 	}
 	if (fd[0] != -1)

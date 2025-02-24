@@ -6,7 +6,7 @@
 /*   By: dahmane <dahmane@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 00:54:46 by dahmane           #+#    #+#             */
-/*   Updated: 2025/02/20 18:59:59 by dahmane          ###   ########.fr       */
+/*   Updated: 2025/02/24 18:48:28 by dahmane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,13 @@ struct s_var
 	char	**f_path;
 	char	**f_patho;
 	char	*infile;
-	char	*outfile;
+	char	*outf;
 	int		fd_in;
-	int		fd_out;
+	int		fd_o;
 };
+
+// OTHER /////////////////////////////////////////////
+void	ft_putstr_fd(char *s, int fd);
 
 // PIPEX /////////////////////////////////////////////
 int		parent(t_pipeto **pipeto, int *fd);
@@ -69,6 +72,7 @@ void	find_path_line(char **path_line, char **env);
 int		join_paths(char **paths, char *command, char ***f_path);
 char	*get_okpath(char **paths);
 int		get_paths(t_pipeto **pipeto, char **env);
+int	get_paths2(t_pipeto **pipeto);
 
 // GET COMMANDS ///////////////////////////////////////////////
 int		get_commands(t_pipeto **pipeto, char **argv);

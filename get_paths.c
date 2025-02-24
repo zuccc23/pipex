@@ -6,7 +6,7 @@
 /*   By: dahmane <dahmane@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 14:02:01 by dahmane           #+#    #+#             */
-/*   Updated: 2025/02/21 14:59:59 by dahmane          ###   ########.fr       */
+/*   Updated: 2025/02/24 18:53:40 by dahmane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,16 @@ int	get_paths(t_pipeto **pipeto, char **env)
 	(*pipeto)->ok_path_out = get_okpath((*pipeto)->f_patho);
 	if (!(*pipeto)->ok_path || !(*pipeto)->ok_path_out)
 		return (1);
+	return (0);
+}
+
+int	get_paths2(t_pipeto **pipeto)
+{
+	if (access((*pipeto)->commands_in[0], F_OK) == 0)
+	{
+		ft_printf("test");
+		return (2);
+	}
 	return (0);
 }
 

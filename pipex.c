@@ -6,7 +6,7 @@
 /*   By: dahmane <dahmane@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 00:54:28 by dahmane           #+#    #+#             */
-/*   Updated: 2025/02/21 15:24:22 by dahmane          ###   ########.fr       */
+/*   Updated: 2025/02/24 18:20:00 by dahmane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,16 +38,16 @@ int	child2(t_pipeto **pipeto, int *fd, char **env)
 	if (close(fd[1]) == -1)
 		return (return_error(&(*pipeto), fd), -1);
 	fd[1] = -1;
-	(*pipeto)->fd_out = open((*pipeto)->outfile, O_WRONLY | O_CREAT | O_TRUNC);
-	if ((*pipeto)->fd_out == -1)
+	(*pipeto)->fd_o = open((*pipeto)->outf, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	if ((*pipeto)->fd_o == -1)
 		return (return_error(&(*pipeto), fd), -1);
 	if (dup2(fd[0], STDIN_FILENO) == -1)
 		return (return_error(&(*pipeto), fd), -1);
-	if (dup2((*pipeto)->fd_out, STDOUT_FILENO) == -1)
+	if (dup2((*pipeto)->fd_o, STDOUT_FILENO) == -1)
 		return (return_error(&(*pipeto), fd), -1);
 	if (close(fd[0]) == -1)
 		return (return_error(&(*pipeto), fd), -1);
-	if (close((*pipeto)->fd_out) == -1)
+	if (close((*pipeto)->fd_o) == -1)
 		return (return_error(&(*pipeto), fd), -1);
 	if (execve((*pipeto)->ok_path_out, (*pipeto)->commands_o, env) == -1)
 		return (return_error(&(*pipeto), fd), -1);

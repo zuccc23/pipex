@@ -4,7 +4,7 @@ CFLAGS = -Wall -Wextra -Werror
 
 PRINTF_DIR = printf
 
-SRC = ./free.c ft_split.c ft_split1.c get_commands.c get_paths.c init.c pipex.c utils.c
+SRC = free.c ft_split.c ft_putstr_fd.c ft_split1.c get_commands.c get_paths.c init.c pipex.c utils.c
 
 OBJ = $(SRC:.c=.o)
 
