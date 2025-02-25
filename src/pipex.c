@@ -6,11 +6,11 @@
 /*   By: dahmane <dahmane@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 00:54:28 by dahmane           #+#    #+#             */
-/*   Updated: 2025/02/24 18:20:00 by dahmane          ###   ########.fr       */
+/*   Updated: 2025/02/25 14:21:53 by dahmane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "../pipex.h"
 
 int	child1(t_pipeto **pipeto, int *fd, char **env)
 {

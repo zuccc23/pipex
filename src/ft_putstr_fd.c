@@ -6,11 +6,11 @@
 /*   By: dahmane <dahmane@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 18:11:02 by dahmane           #+#    #+#             */
-/*   Updated: 2025/02/24 18:17:29 by dahmane          ###   ########.fr       */
+/*   Updated: 2025/02/25 14:22:13 by dahmane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "../pipex.h"
 
 void	ft_putstr_fd(char *s, int fd)
 {

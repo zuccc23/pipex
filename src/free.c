@@ -6,11 +6,11 @@
 /*   By: dahmane <dahmane@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 14:14:11 by dahmane           #+#    #+#             */
-/*   Updated: 2025/02/24 18:20:00 by dahmane          ###   ########.fr       */
+/*   Updated: 2025/02/25 14:22:08 by dahmane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "../pipex.h"
 
 int	return_error_input(t_pipeto **pipeto, int *fd, int argc)
 {

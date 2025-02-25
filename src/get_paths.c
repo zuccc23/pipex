@@ -6,11 +6,11 @@
 /*   By: dahmane <dahmane@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 14:02:01 by dahmane           #+#    #+#             */
-/*   Updated: 2025/02/24 18:53:40 by dahmane          ###   ########.fr       */
+/*   Updated: 2025/02/25 14:22:30 by dahmane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "../pipex.h"
 
 int	get_paths(t_pipeto **pipeto, char **env)
 {
@@ -29,7 +29,7 @@ int	get_paths(t_pipeto **pipeto, char **env)
 	return (0);
 }
 
-int	get_paths2(t_pipeto **pipeto)
+int	need_path(t_pipeto **pipeto)
 {
 	if (access((*pipeto)->commands_in[0], F_OK) == 0)
 	{

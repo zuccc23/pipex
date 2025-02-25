@@ -6,7 +6,7 @@
 /*   By: dahmane <dahmane@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 00:54:46 by dahmane           #+#    #+#             */
-/*   Updated: 2025/02/24 18:48:28 by dahmane          ###   ########.fr       */
+/*   Updated: 2025/02/24 19:37:10 by dahmane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,10 +72,11 @@ void	find_path_line(char **path_line, char **env);
 int		join_paths(char **paths, char *command, char ***f_path);
 char	*get_okpath(char **paths);
 int		get_paths(t_pipeto **pipeto, char **env);
-int	get_paths2(t_pipeto **pipeto);
+int		need_path(t_pipeto **pipeto);
 
 // GET COMMANDS ///////////////////////////////////////////////
 int		get_commands(t_pipeto **pipeto, char **argv);
+int		set_paths(t_pipeto **pipeto);
 
 // SPLIT n stuff ///////////////////////////////////////////////
 char	**ft_split(char const *s, char c);

@@ -6,11 +6,11 @@
 /*   By: dahmane <dahmane@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 14:10:53 by dahmane           #+#    #+#             */
-/*   Updated: 2025/02/19 12:52:29 by dahmane          ###   ########.fr       */
+/*   Updated: 2025/02/25 14:22:46 by dahmane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "../pipex.h"
 
 char	*ft_strjoin(char *s1, char *s2)
 {
