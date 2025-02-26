@@ -6,7 +6,7 @@
 /*   By: dahmane <dahmane@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/15 14:02:01 by dahmane           #+#    #+#             */
-/*   Updated: 2025/02/25 14:22:30 by dahmane          ###   ########.fr       */
+/*   Updated: 2025/02/26 17:15:16 by dahmane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 int	get_paths(t_pipeto **pipeto, char **env)
 {
-	find_path_line(&(*pipeto)->path_line, env);
+	if (find_path_line(&(*pipeto)->path_line, env) == 1)
+		return (1);
 	(*pipeto)->paths = ft_split((*pipeto)->path_line + 5, ':');
 	if (!(*pipeto)->paths)
 		return (1);
@@ -29,16 +30,6 @@ int	get_paths(t_pipeto **pipeto, char **env)
 	return (0);
 }
 
-int	need_path(t_pipeto **pipeto)
-{
-	if (access((*pipeto)->commands_in[0], F_OK) == 0)
-	{
-		ft_printf("test");
-		return (2);
-	}
-	return (0);
-}
-
 char	*get_okpath(char **paths)
 {
 	int	i;
@@ -49,20 +40,23 @@ char	*get_okpath(char **paths)
 	return (paths[i]);
 }
 
-void	find_path_line(char **path_line, char **env)
+int	find_path_line(char **path_line, char **env)
 {
 	int	i;
 
 	i = 0;
+	if (env[0] == NULL)
+		return (1);
 	while (env[i])
 	{
 		if (ft_strnstr(env[i], "PATH=", 5) != 0)
 		{
 			*path_line = ft_strnstr(env[i], "PATH=", 5);
-			return ;
+			return (0);
 		}
 		i++;
 	}
+	return (0);
 }
 
 int	join_paths(char **paths, char *command, char ***f_path)

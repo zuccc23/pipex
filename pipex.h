@@ -6,7 +6,7 @@
 /*   By: dahmane <dahmane@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 00:54:46 by dahmane           #+#    #+#             */
-/*   Updated: 2025/02/24 19:37:10 by dahmane          ###   ########.fr       */
+/*   Updated: 2025/02/26 17:57:54 by dahmane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@
 # include <fcntl.h> 
 # include <string.h>
 # include <errno.h>
-# include "printf/ft_printf.h"
 
 typedef struct s_var	t_pipeto;
 struct s_var
@@ -33,7 +32,7 @@ struct s_var
 	char	*path_line;
 	char	*ok_path;
 	char	*ok_path_out;
-	char	**commands_in;
+	char	**commands_in; 
 	char	**commands_o;
 	char	**paths;
 	char	**f_path;
@@ -46,6 +45,7 @@ struct s_var
 
 // OTHER /////////////////////////////////////////////
 void	ft_putstr_fd(char *s, int fd);
+int		ft_strlen(char *str);
 
 // PIPEX /////////////////////////////////////////////
 int		parent(t_pipeto **pipeto, int *fd);
@@ -55,6 +55,7 @@ int		child2(t_pipeto **pipeto, int *fd, char **env);
 // INIT ///////////////////////////////////////////////
 int		init(t_pipeto **pipeto, char **argv, char **env, int *fd);
 int		fork_and_pipe(t_pipeto **pipeto, int *fd);
+int		return_cmd_not_found(t_pipeto **pipeto, int *fd);
 
 // FREE ///////////////////////////////////////////////
 int		return_error_input(t_pipeto **pipeto, int *fd, int argc);
@@ -68,15 +69,13 @@ char	*ft_strnstr(const char *big, const char *little, size_t len);
 char	*ft_strjoin(char *s1, char *s2);
 
 // GET PATHS ///////////////////////////////////////////////////
-void	find_path_line(char **path_line, char **env);
+int		find_path_line(char **path_line, char **env);
 int		join_paths(char **paths, char *command, char ***f_path);
 char	*get_okpath(char **paths);
 int		get_paths(t_pipeto **pipeto, char **env);
-int		need_path(t_pipeto **pipeto);
 
 // GET COMMANDS ///////////////////////////////////////////////
 int		get_commands(t_pipeto **pipeto, char **argv);
-int		set_paths(t_pipeto **pipeto);
 
 // SPLIT n stuff ///////////////////////////////////////////////
 char	**ft_split(char const *s, char c);

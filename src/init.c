@@ -6,7 +6,7 @@
 /*   By: dahmane <dahmane@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 13:02:13 by dahmane           #+#    #+#             */
-/*   Updated: 2025/02/25 14:22:34 by dahmane          ###   ########.fr       */
+/*   Updated: 2025/02/26 17:06:36 by dahmane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,4 +45,11 @@ int	fork_and_pipe(t_pipeto **pipeto, int *fd)
 			return (1);
 	}
 	return (0);
+}
+
+int	return_cmd_not_found(t_pipeto **pipeto, int *fd)
+{
+	ft_putstr_fd("Error: command not found\n", 2);
+	free_all(&(*pipeto), fd);
+	return (127);
 }

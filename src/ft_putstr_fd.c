@@ -6,7 +6,7 @@
 /*   By: dahmane <dahmane@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 18:11:02 by dahmane           #+#    #+#             */
-/*   Updated: 2025/02/25 14:22:13 by dahmane          ###   ########.fr       */
+/*   Updated: 2025/02/26 17:57:42 by dahmane          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,3 +23,16 @@ void	ft_putstr_fd(char *s, int fd)
 		n ++;
 	}
 }
+
+int	ft_strlen(char *str)
+{
+	int	n;
+
+	n = 0;
+	while (str[n])
+	{
+		n++;
+	}
+	return (n);
+}
+
